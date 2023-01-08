@@ -126,4 +126,23 @@ export default {
     type: Number,
     default: 10,
   },
+  /**
+   * enable Auto scaling of images  
+   */
+  autoScale: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * enable Auto scaling of images  
+   */
+  autoScaleConfig: {
+    type: Object,
+    default: {
+      quality: 0.5,
+      maxWidth: 800,
+      maxHeight: 600,
+      debug: true
+    },
+  },
 };

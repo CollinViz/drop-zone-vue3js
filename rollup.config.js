@@ -89,6 +89,6 @@ export default {
   // ask rollup to not bundle Vue in the library
   external: [
     ...Object.keys(pkg.peerDependencies || {}),
-    ...Object.keys(pkg.dependencies || {}),
+    //...Object.keys(pkg.dependencies || {}),
   ],
 };

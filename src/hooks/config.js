@@ -7,6 +7,8 @@ import mineTypes from '@/utils/minetypes';
 export default function useConfig({ props, context, setMultiple }) {
   // Dropbox reactive config
   const config = reactive({
+    autoScale: props.autoScale,
+    autoScaleConfig: props.autoScaleConfig,
     paramName: props.paramName,
     headers: props.headers,
     xhrTimeout: props.xhrTimeout,
@@ -55,6 +57,18 @@ export default function useConfig({ props, context, setMultiple }) {
   createAcceptsArray();
   emitConfigUpdate();
   // Watch on props changes
+  watch(() => props.autoScale, (val) => {
+    if (config.autoScale !== val) {
+      config.autoScale = val;
+      emitConfigUpdate();
+    }
+  });
+  watch(() => props.autoScaleConfig, (val) => {
+    if (config.autoScaleConfig !== val) {
+      config.autoScaleConfig = val;
+      emitConfigUpdate();
+    }
+  });
   watch(() => props.paramName, (val) => {
     if (config.paramName !== val) {
       config.paramName = val;

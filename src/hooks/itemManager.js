@@ -5,6 +5,7 @@ import mineTypes from '@/utils/minetypes';
 import STATUS from '@/utils/status';
 import useUploadQueue from '@/hooks/uploadQueue';
 import useThumbnail from '@/hooks/thumbnail';
+import useAutoScale from '@/hooks/autoScale';
 
 export default function useItemManager({ config, context }) {
   const items = reactive({
@@ -32,6 +33,19 @@ export default function useItemManager({ config, context }) {
     items,
     context,
   });
+  //Auto Scale 
+  /**
+   * callback for auto scale generation
+   *
+   * @param itemId - item id
+   * @param thumbnail - generated thumbnail
+   */
+  const AutoScaleGenerated = (itemId, newFile) => {
+    items.all[itemId].file = newFile;
+  };
+  const {
+    enqueueAutoScale
+  } = useAutoScale({config,UpdateFile:AutoScaleGenerated})
   /**
    * Remove an uploaded file
    *
@@ -50,8 +64,7 @@ export default function useItemManager({ config, context }) {
   /**
    *
    * Check if the file is an accepted
-   *
-   * @param file
+   *thumbnail
    * @returns {boolean}
    */
   const isValidFile = (file) => {
@@ -102,6 +115,8 @@ export default function useItemManager({ config, context }) {
     // Add the id
     items.ids.push(id);
     // eslint-disable-next-line no-param-reassign
+    console.log("File ID ",id);
+    console.log("autoScale ",config.autoScale);
     items.all[id] = {
       file,
       thumbnail: null,
@@ -109,9 +124,18 @@ export default function useItemManager({ config, context }) {
       status: STATUS.ADDED,
       accepted: true,
       id,
-    };
-    enqueueThumbnail(id, file);
-    enqueueFile(id);
+    }; 
+    if(config.autoScale){ 
+      enqueueAutoScale(id, file).then((resizeFile)=>{ 
+        items.all[id].file = resizeFile;
+        enqueueThumbnail(id, resizeFile); 
+        enqueueFile(id);
+      });
+    }else{
+      enqueueThumbnail(id, resizeFile);
+      enqueueFile(id);
+    }
+    
     context.emit('added-file', { file: items.all[id].file, id });
   };
 
