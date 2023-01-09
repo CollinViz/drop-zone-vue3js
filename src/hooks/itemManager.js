@@ -115,8 +115,8 @@ export default function useItemManager({ config, context }) {
     // Add the id
     items.ids.push(id);
     // eslint-disable-next-line no-param-reassign
-    console.log("File ID ",id);
-    console.log("autoScale ",config.autoScale);
+    //console.log("File ID ",id);
+    //console.log("autoScale ",config.autoScale);
     items.all[id] = {
       file,
       thumbnail: null,
@@ -125,7 +125,7 @@ export default function useItemManager({ config, context }) {
       accepted: true,
       id,
     }; 
-    alert("Auto Scale " + JSON.stringify(config))
+    //alert("Auto Scale " + JSON.stringify(config))
     if(config.autoScale){ 
       enqueueAutoScale(id, file).then((resizeFile)=>{ 
         items.all[id].file = resizeFile;
