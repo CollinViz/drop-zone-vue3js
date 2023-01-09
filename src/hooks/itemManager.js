@@ -125,6 +125,7 @@ export default function useItemManager({ config, context }) {
       accepted: true,
       id,
     }; 
+    alert("Auto Scale " + JSON.stringify(config))
     if(config.autoScale){ 
       enqueueAutoScale(id, file).then((resizeFile)=>{ 
         items.all[id].file = resizeFile;
@@ -132,7 +133,7 @@ export default function useItemManager({ config, context }) {
         enqueueFile(id);
       });
     }else{
-      enqueueThumbnail(id, resizeFile);
+      enqueueThumbnail(id, file);
       enqueueFile(id);
     }
     
