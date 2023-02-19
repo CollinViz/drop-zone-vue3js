@@ -61,6 +61,9 @@ export default function useItemManager({ config, context }) {
     delete items.all[id];
     context.emit('removed-file', { file: deletedFile.file, status: deletedFile.status, id });
   };
+  const updateFile = (itemId, newFile) => {
+    items.all[itemId].file = newFile;
+  };
   /**
    *
    * Check if the file is an accepted
@@ -145,6 +148,7 @@ export default function useItemManager({ config, context }) {
     removeFile,
     addFile,
     processQueue,
+    updateFile
   };
   return { itemManager };
 }

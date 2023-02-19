@@ -160,6 +160,7 @@ export default defineComponent({
       onDrop,
       handleDragOver,
       removeFile: itemManager.removeFile,
+      updateFile: itemManager.updateFile,
       filesize,
       processQueue: itemManager.processQueue,
       dropzone,
