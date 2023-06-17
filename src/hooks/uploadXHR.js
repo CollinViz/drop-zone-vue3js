@@ -173,6 +173,7 @@ export default function useUploadXHR({ config, items }) {
                 console.debug(`file upload finished ${item.file.name}`);
                 // eslint-disable-next-line no-param-reassign
                 item.status = STATUS.DONE;
+                item.response = response;
                 // eslint-disable-next-line no-param-reassign
                 item.upload.progress = 100.00;
               }
